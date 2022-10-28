@@ -1,0 +1,90 @@
+@import '../../global.scss';
+
+.login {
+  display: flex;
+  height: 100vh;
+
+  .login-leftpanel {
+    background-color: $--theme-ui-background-primary;
+    min-width: 45vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .login-info {
+      .login-leftpanel-title {
+        color: $--theme-ui-colors-text;
+        font-size: 28px;
+        font-weight: 600;
+        font-family: 'Roboto', sans-serif;
+      }
+
+      .login-leftpanel-description {
+        color: $--theme-ui-colors-grey;
+        font-weight: 300;
+        width: 400px;
+      }
+
+      .login-leftpanel-form {
+        display: flex;
+        flex-direction: column;
+        margin: 15px 0;
+
+        .login-form-element {
+          margin: 5px 0;
+
+          .login-form-title {
+            margin-bottom: 0.5rem;
+            font-size: 16px;
+            font-weight: 500;
+          }
+          input {
+            border: none;
+            -webkit-box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+            border-radius: 4px;
+            height: 50px;
+            width: 500px;
+            background: $--theme-ui-background-input;
+          }
+        }
+
+        .login-show-password {
+          margin: 5px 0 10px -3px;
+          display: flex;
+          align-items: center;
+
+          input {
+            cursor: pointer;
+          }
+
+          label {
+            margin-left: 5px;
+          }
+        }
+
+        .login-form-submit-button {
+          color: $--theme-ui-background-primary;
+          margin-top: 10px;
+          height: 50px;
+          width: 445px;
+          padding-left: 30px;
+          padding-right: 30px;
+          font-size: 20px;
+          background-color: $--theme-ui-background-button-hightlight;
+          border: none;
+          cursor: pointer;
+
+          &:hover {
+            background-color: #eb6304;
+            border-color: #de5e04;
+          }
+        }
+      }
+    }
+  }
+
+  .login-rightpanel {
+  }
+}
