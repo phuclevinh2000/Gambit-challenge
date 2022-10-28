@@ -1,24 +1,28 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { logout, selectUser } from '../../redux/features/userSlice';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../redux/features/userSlice';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './Home.scss';
 import { ClockLoader } from 'react-spinners';
 import { modbusDataType } from '../../types';
+import { registerNameData } from '../../data/RegisterName';
+import { mergedArrayById } from '../../utils/utils';
+import DataTable from '../../component/DataTable/DataTable';
 
 const baseURL = './modbus-sample.txt';
 
 const Home = () => {
   const user = useSelector(selectUser);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [registerTable, setRegisterTable] = useState<modbusDataType[]>();
   const [dataSentTime, setDataSentTime] = useState('');
 
+  // Format the data
   useEffect(() => {
     axios.get(baseURL).then((response) => {
       const splitResponseToArray = response.data.split('\n'); // Split the response by lines
-      const fullyFormattedArray: modbusDataType[] = [];
+      const fullyFormattedServerArray: modbusDataType[] = [];
       setDataSentTime(splitResponseToArray[0]); // Set the first parameter to be time
       splitResponseToArray.shift(); //remove the first date time parameter
       const formatData = splitResponseToArray.map((item: string) => {
@@ -32,14 +36,15 @@ const Home = () => {
           rawData: Number(item.split(':')[1]),
         };
 
-        fullyFormattedArray.push(singleDataObject);
+        fullyFormattedServerArray.push(singleDataObject);
       });
 
-      setRegisterTable(fullyFormattedArray);
+      // Set the full array of object
+      setRegisterTable(
+        mergedArrayById(fullyFormattedServerArray, registerNameData)
+      );
     });
   }, []);
-
-  console.log(registerTable);
 
   if (!user) {
     navigate('/login');
@@ -48,7 +53,9 @@ const Home = () => {
   }
   return (
     <div className='home'>
-      <button onClick={() => dispatch(logout())}>Log out</button>
+      <p className='home-title'>TUF-2000M</p>
+      <p className='home-dateTime'>{dataSentTime}</p>
+      <DataTable registerTable={registerTable} />
     </div>
   );
 };
