@@ -1,3 +1,5 @@
+import { FormatConstant, ErrorConstant } from '../data/constant';
+
 export const mergedArrayById = (arr1: any, arr2: any) => {
   return [
     ...arr1
@@ -9,13 +11,6 @@ export const mergedArrayById = (arr1: any, arr2: any) => {
       .values(),
   ];
 };
-
-enum FormatConstant {
-  REAL4 = 'REAL4',
-  INTEGER = 'INTEGER',
-  LONG = 'LONG',
-  BCD = 'BCD',
-}
 
 export const convetDecimalToBinary = (decimal: number) => {
   return (decimal >>> 0).toString(2);
@@ -41,15 +36,35 @@ export const hexToSignedInt = (hex: string) => {
   return num;
 };
 
-export const hexToFloat = (hex: string) => {
-  var parts = hex.split('.');
-  if (parts.length > 1) {
-    return (
-      parseInt(parts[0], 16) +
-      parseInt(parts[1], 16) / Math.pow(16, parts[1].length)
-    );
+const convertHexToFloat = (str: string) => {
+  var number = 0,
+    sign,
+    order,
+    mantiss,
+    exp,
+    i;
+
+  if (str.length <= 6) {
+    exp = parseInt(str, 16);
+    sign = exp >> 16 ? -1 : 1;
+    mantiss = ((exp >> 12) & 255) - 127;
+    order = ((exp & 2047) + 2048).toString(2);
+    for (i = 0; i < order.length; i += 1) {
+      number += parseInt(order[i], 10) ? Math.pow(2, mantiss) : 0;
+      mantiss--;
+    }
+  } else if (str.length <= 10) {
+    exp = parseInt(str, 16);
+    sign = exp >> 31 ? -1 : 1;
+    mantiss = ((exp >> 23) & 255) - 127;
+    order = ((exp & 8388607) + 8388608).toString(2);
+    for (i = 0; i < order.length; i += 1) {
+      number += parseInt(order[i], 10) ? Math.pow(2, mantiss) : 0;
+      mantiss--;
+    }
   }
-  return parseInt(parts[0], 16);
+  // @ts-ignore
+  return (number * sign).toString(10);
 };
 
 export const convertDataModbus = (data: any) => {
@@ -58,10 +73,14 @@ export const convertDataModbus = (data: any) => {
 
     if (data[0] === '') return 'No Variable Name';
     else if (data[1] === FormatConstant.REAL4 && data.length === 4) {
+      console.log(data[2], data[3]);
+
       let hexaDecimal =
         convetDecimalToHexadecimal(data[3]) +
         convetDecimalToHexadecimal(data[2]);
-      return hexToFloat(hexaDecimal);
+      // console.log(hexaDecimal);
+
+      return convertHexToFloat(hexaDecimal);
     }
     // Integer only has one case with one para
     else if (data[1] === FormatConstant.INTEGER) {
