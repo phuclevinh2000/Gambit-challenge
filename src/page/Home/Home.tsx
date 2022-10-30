@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectUser } from '../../redux/features/userSlice';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 import './Home.scss';
+
+import { selectUser } from '../../redux/features/userSlice';
 import { ClockLoader } from 'react-spinners';
 import { modbusDataType } from '../../types';
 import { registerNameData } from '../../data/RegisterName';

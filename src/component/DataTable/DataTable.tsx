@@ -1,4 +1,3 @@
-import React from 'react';
 import './DataTable.scss';
 import { convertDataModbus } from '../../utils/utils';
 
@@ -21,11 +20,16 @@ const DataTable = ({ registerTable }: any) => {
       <tbody>
         {registerTable.map((data: any) => {
           let dataConvertInput = null;
+          // If there is no name
           if (data.name === '') {
             dataConvertInput = [data.name, data.format, data.id];
+
+            // If only current one and the next one is equal
           } else if (
             registerTable[data.id]?.name === data.name &&
-            data.name !== ''
+            data.name !== '' &&
+            data.name !== registerTable[data.id + 1]?.name &&
+            registerTable[data.id - 2]?.name !== data.name
           ) {
             dataConvertInput = [
               data.name,
@@ -33,18 +37,37 @@ const DataTable = ({ registerTable }: any) => {
               data.rawData,
               registerTable[data.id]?.rawData,
             ];
-            // console.log(data.id, registerTable[data.id].id);
+            // If only current one is the unique
           } else if (
             registerTable[data.id - 2]?.name !== data.name &&
             registerTable[data.id]?.name !== data.name &&
             data.name !== ''
           ) {
             dataConvertInput = [data.name, data.format, data.rawData];
-            // console.log(data.id);
+
+            // If there are 3 element with the same name
+          } else if (
+            registerTable[data.id]?.name === data.name &&
+            data.name !== '' &&
+            data.name === registerTable[data.id + 1]?.name &&
+            registerTable[data.id - 2]?.name !== data.name
+          ) {
+            dataConvertInput = [
+              data.name,
+              data.format,
+              data.rawData,
+              registerTable[data.id]?.rawData,
+            ];
+            dataConvertInput = [
+              data.name,
+              data.format,
+              data.rawData,
+              registerTable[data.id]?.rawData,
+              registerTable[data.id + 1].rawData,
+            ];
           }
 
           const convertedData = convertDataModbus(dataConvertInput);
-          // console.log(convertedData);
 
           return (
             <tr key={data.id}>
@@ -53,7 +76,7 @@ const DataTable = ({ registerTable }: any) => {
               <td>{data.format}</td>
               <td>{data.Note}</td>
               <td>{data.rawData}</td>
-              {<td>{convertedData}</td>}
+              <td>{convertedData}</td>
             </tr>
           );
         })}

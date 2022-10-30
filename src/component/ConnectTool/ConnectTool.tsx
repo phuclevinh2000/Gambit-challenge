@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import './ConnectTool.scss';
 import { Twirl as Hamburger } from 'hamburger-react';
 import GitHubIcon from '@mui/icons-material/GitHub';
@@ -44,7 +45,7 @@ const ConnectTool = () => {
         <a
           rel='noreferrer'
           target='_blank'
-          href='https://github.com/phuclevinh2000/Portfolio-Phuc-Le-2022'
+          href='https://github.com/phuclevinh2000/Gambit-challenge'
           className={`pf-connect-tool-code ${isOpenContact && 'active'}`}
         >
           <CodeIcon style={{ fontSize: 25 }} />

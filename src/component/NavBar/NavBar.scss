@@ -16,16 +16,30 @@
     padding-right: 20px;
     font-size: large;
     display: flex;
+    align-items: center;
     font-weight: 400;
     color: $--theme-ui-colors-text;
     .navbar-right-user {
       display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (max-width: 992px) {
+      .navbar-right-user {
+        display: none;
+      }
+
+      .navbar-right-button {
+        font-size: 15px;
+      }
     }
 
     .navbar-right-button {
       padding: 0 40px;
       cursor: pointer;
       z-index: 100;
+      margin-top: 3px;
     }
   }
 }

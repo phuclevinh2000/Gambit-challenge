@@ -1,5 +1,6 @@
-import './SharedLayout.scss';
 import { Outlet } from 'react-router-dom';
+
+import './SharedLayout.scss';
 import NavBar from '../NavBar/NavBar';
 
 const SharedLayout = () => {

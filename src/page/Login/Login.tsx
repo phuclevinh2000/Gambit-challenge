@@ -1,14 +1,12 @@
 import { useState } from 'react';
-import {
-  auth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from '../../firebase';
 import { useDispatch, useSelector } from 'react-redux';
+
+import './Login.scss';
+
+import { auth, signInWithEmailAndPassword } from '../../firebase';
 import { selectUser } from '../../redux/features/userSlice';
 import { login } from '../../redux/features/userSlice';
 import { useNavigate } from 'react-router-dom';
-import './Login.scss';
 
 function Login() {
   const [passwordShown, setPasswordShown] = useState(false);
@@ -23,24 +21,6 @@ function Login() {
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userAuth) => {
-        dispatch(
-          login({
-            email: userAuth.user.email,
-            uid: userAuth.user.uid,
-          })
-        );
-      })
-      .catch((err) => {
-        alert(err);
-      });
-  };
-
-  const register = () => {
-    console.log('register the user');
-
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userAuth) => {
-        // @ts-ignore
         dispatch(
           login({
             email: userAuth.user.email,

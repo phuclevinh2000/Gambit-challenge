@@ -50,6 +50,22 @@
           }
         }
 
+        @media (max-width: 992px) {
+          .login-form-element {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            input {
+              width: 95vw;
+            }
+          }
+
+          .login-show-password {
+            justify-content: center;
+          }
+        }
+
         .login-show-password {
           margin: 5px 0 10px -3px;
           display: flex;
@@ -81,10 +97,32 @@
             border-color: #de5e04;
           }
         }
+
+        @media (max-width: 992px) {
+          .login-form-submit-button {
+            width: 95vw;
+          }
+        }
       }
     }
   }
+}
 
-  .login-rightpanel {
+@media (max-width: 992px) {
+  .login {
+    flex-direction: column-reverse;
+    height: 100%;
+    .login-leftpanel {
+      .login-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .login-leftpanel-description {
+          width: 100vw;
+        }
+      }
+    }
   }
 }

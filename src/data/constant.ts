@@ -3,23 +3,26 @@ export enum FormatConstant {
   INTEGER = 'INTEGER',
   LONG = 'LONG',
   BCD = 'BCD',
+  EMPTY = '',
+  BIT = 'BIT',
 }
 
-export enum ErrorConstant {
-  BIT0 = 'No received signal',
-  BIT1 = 'Low received signal',
-  BIT2 = 'Poor received signal',
-  BIT3 = 'Pipe empty',
-  BIT4 = 'Hardware failure',
-  BIT5 = 'Receiving circuits gain in adjusting',
-  BIT6 = 'Frequency at the frequency output over flow',
-  BIT7 = 'Current at 4-20mA over flow',
-  BIT8 = 'RAM check-sum error',
-  BIT9 = 'Main clock or timer clock error',
-  BIT10 = 'Parameters check-sum error',
-  BIT11 = 'ROM check-sum error',
-  BIT12 = 'Temperature circuits error',
-  BIT13 = 'Reserved',
-  BIT14 = 'Internal timer over flow',
-  BIT15 = 'Analog input over range',
-}
+export const ErrorConstant = (bitIndex: number) => {
+  if (bitIndex === 0) return 'No received signal\n';
+  else if (bitIndex === 1) return 'Low received signal\n';
+  else if (bitIndex === 2) return 'Poor received signal\n';
+  else if (bitIndex === 3) return 'Pipe empty\n';
+  else if (bitIndex === 4) return 'Hardware failure ';
+  else if (bitIndex === 5) return 'Receiving circuits gain in adjusting\n';
+  else if (bitIndex === 6)
+    return 'Frequency at the frequency output over flow\n';
+  else if (bitIndex === 7) return 'Current at 4-20mA over flow\n';
+  else if (bitIndex === 8) return 'RAM check-sum error\n';
+  else if (bitIndex === 9) return 'Main clock or timer clock error\n';
+  else if (bitIndex === 10) return 'Parameters check-sum error\n';
+  else if (bitIndex === 11) return 'ROM check-sum error\n';
+  else if (bitIndex === 12) return 'Temperature circuits error\n';
+  else if (bitIndex === 13) return 'Reserved\n';
+  else if (bitIndex === 14) return 'Internal timer over flow\n';
+  else if (bitIndex === 15) return 'Analog input over range\n';
+};

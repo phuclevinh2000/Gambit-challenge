@@ -1,8 +1,9 @@
-import React from 'react';
-import './NavBar.scss';
 import { useDispatch, useSelector } from 'react-redux';
+
+import './NavBar.scss';
 import { logout, selectUser } from '../../redux/features/userSlice';
 import PersonIcon from '@mui/icons-material/Person';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const NavBar = () => {
   const user = useSelector(selectUser);
@@ -23,7 +24,7 @@ const NavBar = () => {
             onClick={() => dispatch(logout())}
             className='navbar-right-button'
           >
-            Log out
+            <LogoutIcon />
           </div>
         </div>
       </div>

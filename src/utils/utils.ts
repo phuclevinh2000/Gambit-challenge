@@ -1,5 +1,11 @@
 import { FormatConstant, ErrorConstant } from '../data/constant';
 
+/**
+ *
+ * @param arr1 : first array
+ * @param arr2 : second array
+ * @returns merged array of array 1 and 2
+ */
 export const mergedArrayById = (arr1: any, arr2: any) => {
   return [
     ...arr1
@@ -12,10 +18,29 @@ export const mergedArrayById = (arr1: any, arr2: any) => {
   ];
 };
 
+/**
+ *
+ * @param str : string
+ * @returns reversed string
+ */
+export const reverseString = (str: string) => {
+  return str.split('').reverse().join('');
+};
+
+/**
+ *
+ * @param decimal : number
+ * @returns binary string of the input decimal
+ */
 export const convetDecimalToBinary = (decimal: number) => {
   return (decimal >>> 0).toString(2);
 };
 
+/**
+ *
+ * @param decimal number
+ * @returns hex string of the input decimal
+ */
 export const convetDecimalToHexadecimal = (decimal: number) => {
   if (decimal < 0) {
     decimal = 0xffffffff + decimal + 1;
@@ -24,6 +49,11 @@ export const convetDecimalToHexadecimal = (decimal: number) => {
   return decimal.toString(16).toUpperCase();
 };
 
+/**
+ *
+ * @param hex string
+ * @returns signed int string of the input hex
+ */
 export const hexToSignedInt = (hex: string) => {
   if (hex.length % 2 !== 0) {
     hex = '0' + hex;
@@ -36,9 +66,14 @@ export const hexToSignedInt = (hex: string) => {
   return num;
 };
 
-const convertHexToFloat = (str: string) => {
+/**
+ *
+ * @param hex string
+ * @returns float number of the input hex
+ */
+export const convertHexToFloat = (str: string) => {
   var number = 0,
-    sign,
+    sign = 0,
     order,
     mantiss,
     exp,
@@ -63,18 +98,39 @@ const convertHexToFloat = (str: string) => {
       mantiss--;
     }
   }
-  // @ts-ignore
   return (number * sign).toString(10);
 };
 
+/**
+ *
+ * @param data data input
+ * @returns convert to user readable data from what the sensor returns
+ */
 export const convertDataModbus = (data: any) => {
   if (data) {
-    // console.log(data);
+    // Check the data format
+    if (data[1] === FormatConstant.BIT) {
+      // Change to binary and reverse the string
+      let binary = convetDecimalToBinary(data[2]);
 
-    if (data[0] === '') return 'No Variable Name';
+      // Add the missing 0 into the string to make it 16 bit
+      for (let i = binary.length - 1; i < 15; i++) {
+        binary = binary.replace(/^/, '0');
+      }
+
+      // Reverse the string to count the index as the error bit
+      binary = reverseString(binary);
+      let errorMessage: string = '';
+
+      for (let i = 0; i < binary.length; i++) {
+        if (binary[i] === '1') {
+          errorMessage += ErrorConstant(i) + ' ';
+        }
+      }
+
+      return errorMessage;
+    } else if (data[0] === FormatConstant.EMPTY) return 'No Variable Name';
     else if (data[1] === FormatConstant.REAL4 && data.length === 4) {
-      console.log(data[2], data[3]);
-
       let hexaDecimal =
         convetDecimalToHexadecimal(data[3]) +
         convetDecimalToHexadecimal(data[2]);
@@ -94,6 +150,10 @@ export const convertDataModbus = (data: any) => {
         convetDecimalToHexadecimal(data[3]) +
         convetDecimalToHexadecimal(data[2]);
       return hexToSignedInt(hexaDecimal);
-    } else if (data[1] === FormatConstant.BCD) return 'BCD';
+    } else if (data[1] === FormatConstant.BCD) {
+      // Need to implement the case for BCD response from sensor too
+
+      return 'BCD';
+    }
   }
 };
