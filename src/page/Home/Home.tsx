@@ -5,17 +5,16 @@ import { useNavigate } from 'react-router-dom';
 
 import './Home.scss';
 
-import { selectUser } from '../../redux/features/userSlice';
-import { ClockLoader } from 'react-spinners';
 import { modbusDataType } from '../../types';
 import { registerNameData } from '../../data/RegisterName';
 import { mergedArrayById } from '../../utils/utils';
 import DataTable from '../../component/DataTable/DataTable';
+import { RootState } from '../../redux/store';
 
 const baseURL = './modbus-sample.txt';
 
 const Home = () => {
-  const user = useSelector(selectUser);
+  const user = useSelector((state: RootState) => state.user.user);
   const navigate = useNavigate();
   const [registerTable, setRegisterTable] = useState<modbusDataType[]>();
   const [dataSentTime, setDataSentTime] = useState('');
@@ -48,11 +47,10 @@ const Home = () => {
     });
   }, []);
 
-  if (!user) {
-    navigate('/login');
-  } else if (!registerTable) {
-    <ClockLoader color='#rgba(0, 0, 0, 0.8)' />;
-  }
+  useEffect(() => {
+    if (!user) navigate('/login');
+  }, [navigate, user]);
+
   return (
     <div className='home'>
       <p className='home-title'>TUF-2000M</p>

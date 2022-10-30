@@ -4,16 +4,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import './Login.scss';
 
 import { auth, signInWithEmailAndPassword } from '../../firebase';
-import { selectUser } from '../../redux/features/userSlice';
 import { login } from '../../redux/features/userSlice';
 import { useNavigate } from 'react-router-dom';
+import { RootState } from '../../redux/store';
 
 function Login() {
   const [passwordShown, setPasswordShown] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
-  const user = useSelector(selectUser);
+  const user = useSelector((state: RootState) => state?.user?.user);
   const navigate = useNavigate();
 
   const loginToApp = (e: any) => {
@@ -29,7 +29,7 @@ function Login() {
         );
       })
       .catch((err) => {
-        alert(err);
+        console.log(err);
       });
   };
 

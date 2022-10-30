@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 
 import './NavBar.scss';
-import { logout, selectUser } from '../../redux/features/userSlice';
+import { RootState } from '../../redux/store';
+import { logout } from '../../redux/features/userSlice';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 const NavBar = () => {
-  const user = useSelector(selectUser);
+  const user: any = useSelector((state: RootState) => state.user.user);
   const dispatch = useDispatch();
   if (user)
     return (

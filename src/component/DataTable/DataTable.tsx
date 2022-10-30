@@ -1,5 +1,6 @@
 import './DataTable.scss';
 import { convertDataModbus } from '../../utils/utils';
+import { tableDataType } from '../../types';
 
 const DataTable = ({ registerTable }: any) => {
   if (!registerTable) {
@@ -18,7 +19,7 @@ const DataTable = ({ registerTable }: any) => {
         </tr>
       </thead>
       <tbody>
-        {registerTable.map((data: any) => {
+        {registerTable.map((data: tableDataType) => {
           let dataConvertInput = null;
           // If there is no name
           if (data.name === '') {

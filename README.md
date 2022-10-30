@@ -11,15 +11,14 @@ Username: admin@example.com
 Password: 123456
 
 # Image
- 
- ![image](https://user-images.githubusercontent.com/47014132/198893395-5a614753-d3b3-4e86-862e-9339bc6f6fea.png)
-  ![image](https://user-images.githubusercontent.com/47014132/198893404-999443aa-43d5-403a-8fc1-77d0d94f6aeb.png)
-  ![image](https://user-images.githubusercontent.com/47014132/198893535-3393e28d-50a2-4b1b-9ca0-c6a61217bd48.png)
 
+![image](https://user-images.githubusercontent.com/47014132/198893395-5a614753-d3b3-4e86-862e-9339bc6f6fea.png)
+![image](https://user-images.githubusercontent.com/47014132/198893404-999443aa-43d5-403a-8fc1-77d0d94f6aeb.png)
+![image](https://user-images.githubusercontent.com/47014132/198893535-3393e28d-50a2-4b1b-9ca0-c6a61217bd48.png)
 
 # Demo
 
-[Demo](https://lofiphucle.netlify.app/)
+[Demo](https://phucle-gambit-challenge.netlify.app/)
 
 ## How to build and run
 
