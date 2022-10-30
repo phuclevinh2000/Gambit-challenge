@@ -1,46 +1,50 @@
-# Getting Started with Create React App
+# What is this project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is the GAMBIT challenge from GAMBIT.
+The option that was chosen is Option 2: Create UI for showing the data for user
 
-## Available Scripts
+# ACCOUNT AND PASSWORD
 
-In the project directory, you can run:
+NOTE: Since this is a challenge that requires authentication, I used firebase cloud for this purpose, and the user name and password is set as:
 
-### `npm start`
+Username: admin@example.com
+Password: 123456
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# Image
+ 
+ ![image](https://user-images.githubusercontent.com/47014132/198893395-5a614753-d3b3-4e86-862e-9339bc6f6fea.png)
+  ![image](https://user-images.githubusercontent.com/47014132/198893404-999443aa-43d5-403a-8fc1-77d0d94f6aeb.png)
+  ![image](https://user-images.githubusercontent.com/47014132/198893535-3393e28d-50a2-4b1b-9ca0-c6a61217bd48.png)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
+# Demo
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+[Demo](https://lofiphucle.netlify.app/)
 
-### `npm run build`
+## How to build and run
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 1. Install NodeJs and npm
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Download and install Node.js from this link https://nodejs.org/en/download/
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 2. Clone or download this repo.
 
-### `npm run eject`
+On your terminal or cmd, type: `git clone git@github.com:phuclevinh2000/Gambit-challenge.git`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+. On your command line, navigate to root folder and install: `npm install`
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 3. Deploy the application
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+. Deploy the app on web-browsers: `npm start`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Technology use in the application
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+. React
+. Redux Tool Kit
+. Firebase
+. React-router-dom
+. sass
+. react-spinners
+. react-table
+. material UI
+. axios
