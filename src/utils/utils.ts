@@ -1,4 +1,8 @@
-import { FormatConstant, ErrorConstant } from '../data/constant';
+import {
+  FormatConstant,
+  ErrorConstant,
+  ConvertMonthNumberToText,
+} from '../data/constant';
 
 /**
  *
@@ -103,6 +107,34 @@ export const convertHexToFloat = (str: string) => {
 
 /**
  *
+ * @param bcd string
+ * @returns decimal
+ */
+const convertBCDToDecimal = (bcd: string) => {
+  // Add n amount of 0 if not meet the require length (16)
+  if (bcd.length < 16) {
+    const missingZero = 16 - bcd.length;
+    let additionString = '';
+    for (let i = 0; i < missingZero; i++) {
+      additionString += '0';
+    }
+    bcd = additionString + bcd;
+  }
+
+  // Split the string to group of 4 character
+  const groupOfBinary = bcd.match(/.{1,4}/g);
+  let returnValue = '';
+
+  for (let i = 0; i < 4; i++) {
+    if (groupOfBinary)
+      returnValue = returnValue + parseInt(groupOfBinary[i], 2);
+  }
+
+  return returnValue;
+};
+
+/**
+ *
  * @param data data input
  * @returns convert to user readable data from what the sensor returns
  */
@@ -152,6 +184,76 @@ export const convertDataModbus = (data: any) => {
       return hexToSignedInt(hexaDecimal);
     } else if (data[1] === FormatConstant.BCD) {
       // Need to implement the case for BCD response from sensor too
+
+      // SMHDMY format
+      if (data[0] === 'Calendar (date and time)') {
+        let YearMonthBinary = convetDecimalToBinary(data[4]);
+        let DayHourBinary = convetDecimalToBinary(data[3]);
+        let MinuteSecondBinary = convetDecimalToBinary(data[2]);
+
+        let MinuteSecond: any = convertBCDToDecimal(MinuteSecondBinary);
+        let DayHour: any = convertBCDToDecimal(DayHourBinary);
+        let YearMonth: any = convertBCDToDecimal(YearMonthBinary);
+
+        MinuteSecond = MinuteSecond.match(/.{1,2}/g);
+        DayHour = DayHour.match(/.{1,2}/g);
+        YearMonth = YearMonth.match(/.{1,2}/g);
+
+        return `${ConvertMonthNumberToText(Number(YearMonth[1]))} ${
+          DayHour[0]
+        } 20${YearMonth[0]} ${DayHour[1]}:${MinuteSecond[0]}:${
+          MinuteSecond[1]
+        }`;
+      }
+
+      // if 00H, then unlock, otherwise same like other BCD
+      if (data[0] === 'System password') {
+        const convertToBinary1 = convetDecimalToBinary(data[2]);
+        const convertToBinary2 = convetDecimalToBinary(data[3]);
+
+        const convertBCDToDecimal1 = convertBCDToDecimal(convertToBinary1);
+        const convertBCDToDecimal2 = convertBCDToDecimal(convertToBinary2);
+        const returnValue = convertBCDToDecimal2 + convertBCDToDecimal1;
+
+        if (Number(returnValue) === 0) {
+          return 'Unlock';
+        } else return returnValue;
+      }
+
+      // if A55A hex, then unlock, otherwise same like other BCD
+      if (data[0] === 'Password for hardware') {
+        const convertToBinary1 = convetDecimalToBinary(data[2]);
+
+        const convertBCDToDecimal1 = convertBCDToDecimal(convertToBinary1);
+        const converInputToHex = convetDecimalToHexadecimal(data[2]);
+
+        if (converInputToHex === 'A55A') {
+          return 'Unlock';
+        } else return convertBCDToDecimal1;
+      }
+
+      // if A55A hex, then unlock, otherwise same like other BCD
+      if (data[0] === 'Day+Hour for Auto-Save') {
+        const convertToBinary1 = convetDecimalToBinary(data[2]);
+
+        const convertBCDToDecimal1 = convertBCDToDecimal(convertToBinary1);
+
+        // Split to day and hour
+        const DayHour: any = convertBCDToDecimal1.match(/.{1,2}/g);
+
+        // Return with correct format
+        return `${DayHour[1]}:00 on ${
+          DayHour[0] === '00'
+            ? 'everyday'
+            : DayHour[0][1] === '1'
+            ? `${DayHour[0]}st`
+            : DayHour[0][1] === '2'
+            ? `${DayHour[0]}nd`
+            : DayHour[0][1] === '3'
+            ? `${DayHour[0]}rd`
+            : `${DayHour[0]}th`
+        }`;
+      }
 
       return 'BCD';
     }

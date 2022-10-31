@@ -10,10 +10,6 @@ NOTE: Since this is a challenge that requires authentication, I used firebase cl
 Username: admin@example.com
 Password: 123456
 
-# What is missing?
-
-The convertion for BCD type (register 49-56) has not been done yet since did not found the correct logic to convert
-
 # Image
 
 ![image](https://user-images.githubusercontent.com/47014132/198893395-5a614753-d3b3-4e86-862e-9339bc6f6fea.png)
