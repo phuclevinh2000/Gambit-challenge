@@ -28,9 +28,14 @@ const Home = () => {
       splitResponseToArray.shift(); //remove the first date time parameter
       const formatData = splitResponseToArray.map((item: string) => {
         const indexOfBack = item.indexOf('\r');
-        const sortValue = item.slice(0, indexOfBack); //Remove the "/r" at the back of each element in the array
-        return sortValue;
+        if (indexOfBack === -1)
+          return item; //incase there is no "/r" inside deployment
+        else {
+          const sortValue = item.slice(0, indexOfBack); //Remove the "/r" at the back of each element in the array
+          return sortValue;
+        }
       });
+
       formatData.forEach((item: string) => {
         const singleDataObject = {
           id: Number(item.split(':')[0]),
